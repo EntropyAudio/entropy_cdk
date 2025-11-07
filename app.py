@@ -1,9 +1,5 @@
-#!/usr/bin/env python3
-import os
-
 import aws_cdk as cdk
-
-from entropy_cdk.entropy_cdk_stack import EntropyCdkStack
+from src.entropy_cdk_stack import EntropyCdkStack
 
 
 app = cdk.App()
