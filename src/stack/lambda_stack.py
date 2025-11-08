@@ -26,10 +26,11 @@ class LambdaStack(Stack):
             self, id="RunPodApiKeySecret", secret_name="RunPodApiKey"
         )
 
-        self.audio_generation_lambda = Lambda(
+        self.audio_generation_controller_lambda = Lambda(
             self,
             id="AudioGenerationController",
-            runtime=Runtime.PYTHON_3_12,
+            function_name="AudioGenerationController",
+            runtime=Runtime.PYTHON_3_13,
             handler="src.handler.lambda_handler",
             code=Code.from_asset(str(lambda_zip_path)),
             environment={
@@ -40,9 +41,9 @@ class LambdaStack(Stack):
             log_retention=aws_logs.RetentionDays.ONE_WEEK
         )
 
-        runpod_api_key_secret.grant_read(self.audio_generation_lambda)
-        props.s3_stack.audio_data_bucket.grant_read_write(self.audio_generation_lambda)
-        props.ddb_stack.audio_metadata_table.grant_read_write_data(self.audio_generation_lambda)
+        runpod_api_key_secret.grant_read(self.audio_generation_controller_lambda)
+        props.s3_stack.audio_data_bucket.grant_read_write(self.audio_generation_controller_lambda)
+        props.ddb_stack.audio_metadata_table.grant_read_write_data(self.audio_generation_controller_lambda)
 
-        self.audio_generation_lambda.add_environment(c.ENV_AUDIO_DATA_BUCKET, props.s3_stack.audio_data_bucket.bucket_name)
-        self.audio_generation_lambda.add_environment(c.ENV_AUDIO_METADATA_TABLE, props.ddb_stack.audio_metadata_table.table_name)
+        self.audio_generation_controller_lambda.add_environment(c.ENV_AUDIO_DATA_BUCKET, props.s3_stack.audio_data_bucket.bucket_name)
+        self.audio_generation_controller_lambda.add_environment(c.ENV_AUDIO_METADATA_TABLE, props.ddb_stack.audio_metadata_table.table_name)
