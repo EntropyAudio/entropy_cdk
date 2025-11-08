@@ -1,4 +1,5 @@
 from aws_cdk import Environment, App
+from src.stack.apig_stack import APIGStack, APIGStackProps
 from src.stack.ddb_stack import DDBStack
 from src.stack.s3_stack import S3Stack
 from src.stack.lambda_stack import LambdaStack, LambdaStackProps
@@ -18,13 +19,22 @@ ddb_stack = DDBStack(
     env=env,
 )
 
-LambdaStack(
+lambda_stack = LambdaStack(
     scope=app,
     construct_id="EntropyAudioLambdaStack",
     env=env,
     props=LambdaStackProps(
         s3_stack=s3_stack,
         ddb_stack=ddb_stack,
+    )
+)
+
+apig_stack = APIGStack(
+    scope=app,
+    construct_id="EntropyAudioAPIStack",
+    env=env,
+    props=APIGStackProps(
+        lambda_stack=lambda_stack
     )
 )
 

@@ -21,8 +21,8 @@ class APIGStack(Stack):
 
         http_api = HttpApi(
             self,
-            "MyHttpApi",
-            api_name="MyServiceApi",
+            id="AudioGenerationService",
+            api_name="AudioGenerationService",
             cors_preflight=CorsPreflightOptions(
                 allow_origins=["*"],
                 allow_methods=[CorsHttpMethod.GET, CorsHttpMethod.POST],
@@ -31,14 +31,7 @@ class APIGStack(Stack):
         )
 
         http_api.add_routes(
-            path="/{proxy+}",
+            path="/generate",
             methods=[HttpMethod.GET, HttpMethod.POST],
             integration=audio_generation_controller_integration
-        )
-
-        CfnOutput(
-            self,
-            "ApiEndpointUrl",
-            value=http_api.url,
-            description="The URL of the API Gateway endpoint"
         )
