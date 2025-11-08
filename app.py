@@ -9,19 +9,19 @@ env = Environment(account="533267269362", region="us-east-1")
 
 s3_stack = S3Stack(
     scope=app,
-    construct_id="EntropyAudioS3Stack",
+    construct_id="EntropyS3Stack",
     env=env,
 )
 
 ddb_stack = DDBStack(
     scope=app,
-    construct_id="EntropyAudioDDBStack",
+    construct_id="EntropyDDBStack",
     env=env,
 )
 
 lambda_stack = LambdaStack(
     scope=app,
-    construct_id="EntropyAudioLambdaStack",
+    construct_id="EntropyLambdaStack",
     env=env,
     props=LambdaStackProps(
         s3_stack=s3_stack,
@@ -31,7 +31,7 @@ lambda_stack = LambdaStack(
 
 apig_stack = APIGStack(
     scope=app,
-    construct_id="EntropyAudioAPIStack",
+    construct_id="EntropyAPIStack",
     env=env,
     props=APIGStackProps(
         lambda_stack=lambda_stack

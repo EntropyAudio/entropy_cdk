@@ -34,7 +34,7 @@ class LambdaStack(Stack):
             handler="src.handler.lambda_handler",
             code=Code.from_asset(str(lambda_zip_path)),
             environment={
-                c.ENV_RUNPOD_API_KEY: runpod_api_key_secret.secret_name,
+                c.ENV_RUNPOD_API_KEY_SECRET: runpod_api_key_secret.secret_name,
             },
             timeout=Duration.seconds(30),
             memory_size=128,
