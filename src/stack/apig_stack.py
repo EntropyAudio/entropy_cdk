@@ -32,6 +32,6 @@ class APIGStack(Stack):
 
         http_api.add_routes(
             path="/generate",
-            methods=[HttpMethod.GET, HttpMethod.POST],
+            methods=[HttpMethod.POST],
             integration=audio_generation_controller_integration
         )
