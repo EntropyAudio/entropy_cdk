@@ -76,8 +76,14 @@ class CognitoStack(Stack):
                     authorization_code_grant=True
                 ),
                 scopes=[OAuthScope.OPENID, OAuthScope.EMAIL, OAuthScope.PROFILE],
-                callback_urls=["http://localhost:4200/"],
-                logout_urls=["http://localhost:4200/"]
+                callback_urls=[
+                    "http://localhost:4200/",
+                    "https://entropyaudio.io/"
+                ],
+                logout_urls=[
+                    "http://localhost:4200/",
+                    "https://entropyaudio.io/"
+                ]
             ),
             supported_identity_providers=[
                 UserPoolClientIdentityProvider.COGNITO,

@@ -19,7 +19,7 @@ class S3Stack(Stack):
             cors=[
                 CorsRule(
                     allowed_methods=[HttpMethods.GET, HttpMethods.POST],
-                    allowed_origins=["http://localhost:4200"],
+                    allowed_origins=["http://localhost:4200", "https://entropyaudio.io"],
                     allowed_headers=["*"]
                 )
             ]
