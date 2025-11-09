@@ -1,6 +1,6 @@
 from aws_cdk import Stack, Duration
 from aws_cdk import aws_logs
-from aws_cdk.aws_lambda import Function as Lambda, Runtime, Code
+from aws_cdk.aws_lambda import Function as Lambda, Runtime, Code, Architecture
 from aws_cdk.aws_secretsmanager import Secret
 from .ddb_stack import DDBStack
 from .s3_stack import S3Stack
@@ -36,6 +36,7 @@ class LambdaStack(Stack):
             environment={
                 c.ENV_RUNPOD_API_KEY_SECRET: runpod_api_key_secret.secret_name,
             },
+            architecture=Architecture.ARM_64,
             timeout=Duration.seconds(30),
             memory_size=128,
             log_retention=aws_logs.RetentionDays.ONE_WEEK
