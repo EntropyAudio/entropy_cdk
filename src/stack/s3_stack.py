@@ -1,5 +1,5 @@
 from aws_cdk import Stack, RemovalPolicy
-from aws_cdk.aws_s3 import Bucket, BucketEncryption, BlockPublicAccess
+from aws_cdk.aws_s3 import Bucket, BucketEncryption, BlockPublicAccess, CorsRule, HttpMethods
 from constructs import Construct
 
 
@@ -16,4 +16,11 @@ class S3Stack(Stack):
             enforce_ssl=True,
             versioned=True,
             removal_policy=RemovalPolicy.RETAIN,
+            cors=[
+                CorsRule(
+                    allowed_methods=[HttpMethods.GET, HttpMethods.POST],
+                    allowed_origins=["http://localhost:4200"],
+                    allowed_headers=["*"]
+                )
+            ]
         )

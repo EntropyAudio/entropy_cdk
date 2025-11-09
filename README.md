@@ -1,7 +1,3 @@
 ```angular2html
-cdk synth
-```
-
-```angular2html
-cdk deploy --all
+cdk synth && cdk deploy --all
 ```
