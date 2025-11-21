@@ -10,8 +10,8 @@ class DDBStack(Stack):
             self,
             id="AudioMetadata",
             table_name="AudioMetadata",
-            partition_key=Attribute(name="userId", type=AttributeType.STRING),
-            sort_key=Attribute(name="creationDate", type=AttributeType.STRING),
+            partition_key=Attribute(name="user_id", type=AttributeType.STRING),
+            sort_key=Attribute(name="creation_date", type=AttributeType.NUMBER),
             billing_mode=BillingMode.PAY_PER_REQUEST,
             point_in_time_recovery=True,
         )
