@@ -18,7 +18,6 @@ class DDBStack(Stack):
 
         # user who generated the audio
         # job execution id of audio
-
         # s3 file path of audio
         # whether the audio was selected
         # prompt used to generate audio + other conditioning data

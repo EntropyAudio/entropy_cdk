@@ -41,7 +41,8 @@ apig_stack = APIGStack(
     construct_id="EntropyAPIStack",
     env=env,
     props=APIGStackProps(
-        lambda_stack=lambda_stack
+        lambda_stack=lambda_stack,
+        cognito_stack=cognito_stack,
     )
 )
 
