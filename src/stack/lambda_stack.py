@@ -48,3 +48,21 @@ class LambdaStack(Stack):
 
         self.audio_generation_controller_lambda.add_environment(c.ENV_AUDIO_DATA_BUCKET, props.s3_stack.audio_data_bucket.bucket_name)
         self.audio_generation_controller_lambda.add_environment(c.ENV_AUDIO_METADATA_TABLE, props.ddb_stack.audio_metadata_table.table_name)
+
+        self.audio_selection_lambda = Lambda(
+            self,
+            id="AudioSelection",
+            function_name="AudioSelection",
+            runtime=Runtime.PYTHON_3_13,
+            handler="src.handler.audio_selection_handler.lambda_handler",
+            code=Code.from_asset(str(lambda_zip_path)),
+            architecture=Architecture.ARM_64,
+            timeout=Duration.seconds(5),
+            memory_size=128,
+            log_retention=aws_logs.RetentionDays.ONE_WEEK
+        )
+
+        props.ddb_stack.audio_metadata_table.grant_read_write_data(self.audio_selection_lambda)
+
+        self.audio_selection_lambda.add_environment(c.ENV_AUDIO_DATA_BUCKET, props.s3_stack.audio_data_bucket.bucket_name)
+        self.audio_selection_lambda.add_environment(c.ENV_AUDIO_METADATA_TABLE, props.ddb_stack.audio_metadata_table.table_name)
