@@ -24,11 +24,6 @@ class APIGStack(Stack):
             user_pool_clients=[props.cognito_stack.user_pool_client]
         )
 
-        audio_generation_controller_integration = HttpLambdaIntegration(
-            "AudioGenerationControllerIntegration",
-            handler=props.lambda_stack.audio_generation_controller_lambda
-        )
-
         http_api = HttpApi(
             self,
             id="AudioGenerationService",
@@ -41,9 +36,24 @@ class APIGStack(Stack):
             )
         )
 
+        audio_generation_controller_integration = HttpLambdaIntegration(
+            "AudioGenerationControllerIntegration",
+            handler=props.lambda_stack.audio_generation_controller_lambda
+        )
+        audio_selection_integration = HttpLambdaIntegration(
+            "AudioSelectionIntegration",
+            handler=props.lambda_stack.audio_selection_lambda
+        )
+
         http_api.add_routes(
             path="/generate",
             methods=[HttpMethod.POST],
             integration=audio_generation_controller_integration,
+            authorizer=authorizer
+        )
+        http_api.add_routes(
+            path="/select",
+            methods=[HttpMethod.POST],
+            integration=audio_selection_integration,
             authorizer=authorizer
         )
