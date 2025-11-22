@@ -31,7 +31,7 @@ class LambdaStack(Stack):
             id="AudioGenerationController",
             function_name="AudioGenerationController",
             runtime=Runtime.PYTHON_3_13,
-            handler="src.handler.lambda_handler",
+            handler="src.handler.audio_generation_handler.lambda_handler",
             code=Code.from_asset(str(lambda_zip_path)),
             environment={
                 c.ENV_RUNPOD_API_KEY_SECRET: runpod_api_key_secret.secret_name,
