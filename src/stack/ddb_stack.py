@@ -18,7 +18,7 @@ class DDBStack(Stack):
         )
 
         self.audio_metadata_table.add_global_secondary_index(
-            index_name="ExecutionIdIndex",
+            index_name="UserIndex",
             partition_key=Attribute(name="user_id", type=AttributeType.STRING),
             sort_key=Attribute(name="creation_date", type=AttributeType.NUMBER),
             projection_type=ProjectionType.ALL
