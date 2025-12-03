@@ -1,6 +1,7 @@
 from aws_cdk import Stack, RemovalPolicy
 from aws_cdk.aws_s3 import Bucket, BucketEncryption, BlockPublicAccess, CorsRule, HttpMethods
 from constructs import Construct
+from ..utils import constants as c
 
 
 class S3Stack(Stack):
@@ -10,7 +11,7 @@ class S3Stack(Stack):
         self.audio_data_bucket = Bucket(
             self,
             id="AudioData",
-            bucket_name=f"entropy-audio-data-{self.region}",
+            bucket_name=c.AUDIO_DATA_BUCKET,
             encryption=BucketEncryption.S3_MANAGED,
             block_public_access=BlockPublicAccess.BLOCK_ALL,
             enforce_ssl=True,
