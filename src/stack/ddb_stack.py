@@ -1,5 +1,5 @@
-from aws_cdk import Stack
-from aws_cdk.aws_dynamodb import Table, Attribute, AttributeType, BillingMode
+from aws_cdk import Stack, RemovalPolicy
+from aws_cdk.aws_dynamodb import Table, Attribute, AttributeType, BillingMode, ProjectionType
 from constructs import Construct
 
 class DDBStack(Stack):
@@ -10,10 +10,18 @@ class DDBStack(Stack):
             self,
             id="AudioMetadata",
             table_name="AudioMetadata",
-            partition_key=Attribute(name="user_id", type=AttributeType.STRING),
-            sort_key=Attribute(name="creation_date", type=AttributeType.NUMBER),
+            partition_key=Attribute(name="execution_id", type=AttributeType.STRING),
+            sort_key=Attribute(name="audio_id", type=AttributeType.NUMBER),
             billing_mode=BillingMode.PAY_PER_REQUEST,
             point_in_time_recovery=True,
+            removal_policy=RemovalPolicy.DESTROY
+        )
+
+        self.audio_metadata_table.add_global_secondary_index(
+            index_name="ExecutionIdIndex",
+            partition_key=Attribute(name="user_id", type=AttributeType.STRING),
+            sort_key=Attribute(name="creation_date", type=AttributeType.NUMBER),
+            projection_type=ProjectionType.ALL
         )
 
         # user who generated the audio
